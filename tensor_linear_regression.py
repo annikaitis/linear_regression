@@ -54,3 +54,10 @@ plt.show()
 # Toon resultaat
 print(f"Training loss: {model.evaluate(x, y, verbose=0)}")
 print(f"Gewicht (W): {w:.4f}, Bias (b): {b:.4f}")
+
+# Stel: je wilt voorspellen voor Salinity = 35.0
+new_sal = np.array([[35.0]], dtype=np.float32)  # Let op dubbele haakjes!
+prediction = model.predict(new_sal)
+
+print(f"Voorspelling voor Salinity 35.0 = {prediction[0][0]:.2f} graden C")
+#Voorspelling voor Salinity 35.0 = -29.70 graden C

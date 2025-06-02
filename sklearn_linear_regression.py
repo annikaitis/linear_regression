@@ -8,7 +8,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
 df = pd.read_csv('bottle.csv', delimiter=",", low_memory=False)
-df_binary = df[['Salnty', 'T_degC']]
+df_binary = df[['Salnty', 'T_degC']].dropna()
+df_binary = df_binary[:1000]
+
 
 #df of the only two columns you want in correlation plot and plot them with regression line
 df_binary.columns = ['Sal', 'Temp']
@@ -82,3 +84,10 @@ print("R_squared", r_squared)
 # MSE: 2.7546837460875016
 # RMSE: 1.6597239969607904
 # R_squared 0.727402352998848
+
+new_sal = np.array([[35.0]])  # Let op: dubbele haakjes
+predicted_temp = regr.predict(new_sal)
+
+print(f"Voorspelde temperatuur bij salinity 35.0 = {predicted_temp[0][0]:.2f} °C")
+
+#Voorspelde temperatuur bij salinity 35.0 = 1.31 °C
