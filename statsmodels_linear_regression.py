@@ -22,15 +22,16 @@ sns.regplot(x='Sal', y='STheta', data=df_binary)
 plt.title("plot2")
 plt.show()
 
-model = smf.ols(formula='Sal ~ Temp', data=df_binary).fit()
+model = smf.ols(formula='Temp ~ Sal', data=df_binary).fit()
 print(model.summary())
 
 
 # Nieuwe input als DataFrame
 new_data = pd.DataFrame({
-    'STheta': [25.0]
+    'Sal': [35.0]
 })
 
 # Voorspellen
 predicted_sal = model.predict(new_data)
 print(f"Voorspelde Salinity = {predicted_sal[0]:.2f}")
+#Voorspelde temp bij 35 sal = 1.32 graden C

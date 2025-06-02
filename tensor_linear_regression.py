@@ -55,9 +55,16 @@ plt.show()
 print(f"Training loss: {model.evaluate(x, y, verbose=0)}")
 print(f"Gewicht (W): {w:.4f}, Bias (b): {b:.4f}")
 
-# Stel: je wilt voorspellen voor Salinity = 35.0
-new_sal = np.array([[35.0]], dtype=np.float32)  # Let op dubbele haakjes!
-prediction = model.predict(new_sal)
+# 1. Standaardiseer input net als bij training
+new_sal = np.array([[35.0]], dtype=np.float32)
+new_sal_scaled = scaler_x.transform(new_sal)
 
-print(f"Voorspelling voor Salinity 35.0 = {prediction[0][0]:.2f} graden C")
-#Voorspelling voor Salinity 35.0 = -29.70 graden C
+# 2. Doe voorspelling met geschaalde input
+prediction_scaled = model.predict(new_sal_scaled)
+
+# 3. Terugtransformeer de output naar echte temperatuur
+prediction_real = scaler_y.inverse_transform(prediction_scaled)
+
+# 4. Print
+print(f"Voorspelling voor Salinity 35.0 = {prediction_real[0][0]:.2f} graden C")
+# Voorspelling voor Salinity 35.0 = 1.31 graden C
